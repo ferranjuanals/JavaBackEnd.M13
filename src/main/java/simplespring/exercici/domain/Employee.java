@@ -4,26 +4,26 @@ import java.util.Arrays;
 
 import javax.persistence.*;
 
-import org.springframework.stereotype.Component;
-
-@Component
+@Entity
 public class Employee {
+	
+	public enum Role {
+		INTERN, EMPLOYEE, MANAGER, BOSS
+	}
 
 	@Id
-	@GeneratedValue
-	private final Long id;
+	private long id;
+	private static long next_id=0;
 	private String name;
 	private Role role;
 	private double salary;
-	private enum Role {
-		INTERN, EMPLOYEE, MANAGER, BOSS
-	}
 	
 	public Employee(String name, String role) throws Exception {
-		this.id = null;
+		this.id = next_id;
 		this.name = name;
 		if(!Arrays.stream(Role.values()).anyMatch((r) -> r.name().equals(role.toUpperCase()))) throw new Exception();
 		defineRoleAndSalary(role);
+		next_id++;
 	};
 	
 	public long getId() {
@@ -38,11 +38,17 @@ public class Employee {
 	public Role getRole() {
 		return role;
 	}
+	public void setRole(String role) throws Exception {
+		if(!Arrays.stream(Role.values()).anyMatch((r) -> r.name().equals(role.toUpperCase()))) throw new Exception();
+		defineRoleAndSalary(role);
+	}
 	public double getSalary() {
 		return salary;
 	}
-	public void setSalary(double salary) {
-		this.salary = salary;
+
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", name=" + name + ", role=" + role + ", salary=" + salary + "]";
 	}
 
 	private void defineRoleAndSalary(String role) {
