@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import javax.persistence.*;
 
+import simplespring.exercici.exception.RoleInvalidException;
+
 @Entity
 public class Employee {
 	
@@ -18,14 +20,17 @@ public class Employee {
 	private Role role;
 	private double salary;
 	
+	public Employee() {
+		this.id = next_id;
+		next_id++;
+	}	
 	public Employee(String name, String role) throws Exception {
 		this.id = next_id;
 		this.name = name;
-		if(!Arrays.stream(Role.values()).anyMatch((r) -> r.name().equals(role.toUpperCase()))) throw new Exception();
+		if(!validateRole(role)) throw new RoleInvalidException(role);
 		defineRoleAndSalary(role);
 		next_id++;
-	};
-	
+	}	
 	public long getId() {
 		return id;
 	}
@@ -38,8 +43,8 @@ public class Employee {
 	public Role getRole() {
 		return role;
 	}
-	public void setRole(String role) throws Exception {
-		if(!Arrays.stream(Role.values()).anyMatch((r) -> r.name().equals(role.toUpperCase()))) throw new Exception();
+	public void setRole(String role) {
+		if(!validateRole(role)) throw new RoleInvalidException(role);
 		defineRoleAndSalary(role);
 	}
 	public double getSalary() {
@@ -51,6 +56,14 @@ public class Employee {
 		return "Employee [id=" + id + ", name=" + name + ", role=" + role + ", salary=" + salary + "]";
 	}
 
+	private boolean validateRole(String role) {
+		if(Arrays.stream(Role.values()).anyMatch((r) -> r.name().equals(role.toUpperCase()))) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	private void defineRoleAndSalary(String role) {
 		switch(role.toUpperCase()) {
 		case "INTERN":
