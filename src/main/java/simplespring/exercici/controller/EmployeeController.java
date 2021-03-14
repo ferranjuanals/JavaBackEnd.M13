@@ -5,14 +5,16 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import simplespring.exercici.domain.Employee;
 import simplespring.exercici.domain.Employee.Role;
 import simplespring.exercici.service.EmployeeService;
 
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("")
+@RequestMapping("/employees")
 public class EmployeeController {
 
 	private final EmployeeService employeeService;
@@ -23,37 +25,42 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("")
-	public String index() {
-		return "Application";
+	public ResponseEntity<List<Employee>> getEmployees() {
+		List<Employee> listEmployees = employeeService.getEmployees();
+		return ResponseEntity.ok(listEmployees);
 	}
 	
-	@GetMapping("/employees")
-	public List<Employee> getEmployees() {
-		return employeeService.getEmployees();
+	@GetMapping("/{id}")
+	public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") long id) {
+		Optional<Employee> optionalEmployee = employeeService.getEmployeeById(id);
+		if(optionalEmployee.isPresent()) {
+			return ResponseEntity.ok(optionalEmployee.get());
+		}else {
+			return ResponseEntity.noContent().build();
+		}
 	}
 	
-	@GetMapping("/employees/{id}")
-	public Optional<Employee> getEmployeeById(@PathVariable("id") long id) {
-		return employeeService.getEmployee(id);
+	@GetMapping("/role/{role}")
+	public ResponseEntity<List<Employee>> getEmployeesByRole(@PathVariable("role") Role role){
+		List<Employee> employeesByRole = employeeService.getEmployeesByRole(role);
+		return ResponseEntity.ok(employeesByRole);
 	}
 	
-	@GetMapping("/employees/role/{role}")
-	public List<Employee> getEmployeesByRole(@PathVariable("role") Role role){
-		return employeeService.getEmployeesByRole(role);
+	@PostMapping(value = "/addEmployee", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
+		Employee newEmployee = employeeService.addEmployee(employee);
+		return ResponseEntity.ok(newEmployee);
 	}
 	
-	@PostMapping(value = "/employees", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void addEmployee(@RequestBody Employee employee) {
-		employeeService.addEmployee(employee);
-	}
-	
-	@PutMapping(value = "/employees/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void updateEmployee(@PathVariable("id") long id, @RequestBody Employee employee) {
-		employeeService.updateEmployee(id, employee);
+	@PutMapping(value = "/updateEmployee/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Employee> updateEmployee(@PathVariable("id") long id, @RequestBody Employee employee) {
+		Employee updateEmployee = employeeService.updateEmployee(id, employee);
+		return ResponseEntity.ok(updateEmployee);
 	}
 
-	@DeleteMapping("/employees/{id}")
-	public void deleteEmployee(@PathVariable("id") long id) {
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<Void> deleteEmployee(@PathVariable("id") long id) {
 		employeeService.deleteEmployee(id);
+		return ResponseEntity.ok(null);
 	}
 }

@@ -154,8 +154,9 @@ public class EmployeeRepository implements IRepository, JpaRepository<Employee, 
 											.collect(Collectors.toList());
 		return employeesByRole;
 	}
-	public void addEmployee(Employee employee) {
-		employees.add(employee);		
+	public Employee addEmployee(Employee employee) {
+		employees.add(employee);
+		return employee;
 	}
 	
 }

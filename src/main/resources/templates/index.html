@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Employees</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<H1> EMPLOYEES </H1>
+<div>
+	<div>
+		<label for="selectRole">Filter by Role:</label>
+		<select name="selectRole" id="selectRole">
+			<option value="all" selected >All</option>
+			<option value="INTERN">INTERN</option>
+			<option value="EMPLOYEE">EMPLOYEE</option>
+			<option value="MANAGER">MANAGER</option>
+			<option value="BOSS">BOSS</option>
+		</select>
+		<input type="button" name="buttonRefreshEmployees" value="Refresh Employees" id="buttonRefreshEmployees"/>
+	</div>
+	<div>
+		<table id="employeeData" border=1>
+			<thead>
+				<tr><th> ID <th> Name <th> Role <th> Salary <th></tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	<div id="idForm"></div>
+	<div id="nameForm">
+		<label for="fieldEmployeeId">Id:</label>
+		<input type="text" id="fieldEmployeeId" value="" size=1 readonly/>
+		<label for="fieldEmployeeName">Name:</label>
+		<input type="text" id="fieldEmployeeName" size=15 required/>
+		<label for="fieldEmployeeRole">Role:</label>
+		<select name="fieldEmployeeRole" id="fieldEmployeeRole">
+			<option value="default" selected disabled>Select Role</option>
+			<option value="INTERN">INTERN</option>
+			<option value="EMPLOYEE">EMPLOYEE</option>
+			<option value="MANAGER">MANAGER</option>
+			<option value="BOSS">BOSS</option>
+		</select>
+		<label for="fieldEmployeeSalary">Salary:</label>
+		<input type="text" id="fieldEmployeeSalary" size=4 value="" readonly/>
+		<input type="button" value="Add" id="buttonAddEmployee"/>
+		<input type="button" value="Edit" id="buttonEditEmployee" disabled/>
+		<input type="button" value="Delete" id="buttonDeleteEmployee" disabled/>
+	</div>
+</div>
+<script type="text/javascript" src="employees.js"></script>
+</body>
+</html>
