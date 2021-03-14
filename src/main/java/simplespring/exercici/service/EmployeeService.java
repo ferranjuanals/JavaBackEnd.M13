@@ -19,24 +19,27 @@ public class EmployeeService {
 	@Autowired
 	public EmployeeService(EmployeeRepository employeeRepository) {
 		this.employeeRepository = employeeRepository;
-	}	
-	public Optional<Employee> getEmployee(long id){
-		return employeeRepository.findById(id);
-	}	
+	}
+	
 	public List<Employee> getEmployees() {
 		return employeeRepository.findAll();
-	}	
+	}		
+	public Optional<Employee> getEmployeeById(long id){
+		return employeeRepository.findById(id);
+	}
 	public List<Employee> getEmployeesByRole(Role role){
 		return employeeRepository.findByRole(role);
 	}
-	public void addEmployee(Employee employee) {
+	public Employee addEmployee(Employee employee) {
 		employeeRepository.addEmployee(employee);
+		return employee;
 	}
-	public void updateEmployee(long id, Employee employee) {
+	public Employee updateEmployee(long id, Employee employee) {
 		if(!employeeRepository.existsById(id)) throw new IdNotFoundException(id);
-		Employee emp = employeeRepository.getOne(id);
-		emp.setName(employee.getName());
-		emp.setRole(employee.getRole().toString());		
+		Employee updateEmployee = employeeRepository.getOne(id);
+		updateEmployee.setName(employee.getName());
+		updateEmployee.setRole(employee.getRole().toString());
+		return updateEmployee;
 	}
 	public void deleteEmployee(long id) {
 		if(!employeeRepository.existsById(id)) throw new IdNotFoundException(id);
