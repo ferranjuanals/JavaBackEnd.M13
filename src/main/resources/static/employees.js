@@ -6,8 +6,6 @@ $(document).ready(function() {
 	
 	$(function() {
 		loadEmployees();
-//		$("#buttonDeleteEmployee").prop("disabled", true);
-//		$("#buttonEditEmployee").prop("disabled", true);
 	});
 	
 	$("#buttonAddEmployee").click(function(event) {
@@ -15,7 +13,6 @@ $(document).ready(function() {
 		var jsonParams = {};
 		jsonParams['name'] = $("#fieldEmployeeName").val();
 		jsonParams['role'] = $("#fieldEmployeeRole").val();
-		$("#buttonAddEmployee").prop("disabled", true);		
 		$.ajax({
 			type: "POST",
 			cache: false,
@@ -29,7 +26,6 @@ $(document).ready(function() {
 			alert("Failed");
 		}).always(function() {
 			cleanForm();
-			$("#buttonAddEmployee").prop("disabled", false);
 		});
 	});
 	
@@ -39,7 +35,6 @@ $(document).ready(function() {
 		var jsonParams = {};
 		jsonParams['name'] = $("#fieldEmployeeName").val();
 		jsonParams['role'] = $("#fieldEmployeeRole").val();
-		$("#buttonEditEmployee").prop("disabled", true);	
 		$.ajax({
 			type: "PUT",
 			url: "/employees/updateEmployee/" + id,
@@ -52,14 +47,12 @@ $(document).ready(function() {
 			alert("Failed");
 		}).always(function() {
 			cleanForm();
-			$("#buttonEditEmployee").prop("disabled", false);
 		});
 	});
 
 	$("#buttonDeleteEmployee").click(function(event) {
 		event.preventDefault();		
 		var id = $("#fieldEmployeeId").val();
-		$("#buttonDeleteEmployee").prop("disabled", true);
 		if (confirm('Are you sure you want to delete this entry?')) {
 			$.ajax({
 			    type : "DELETE",
@@ -70,7 +63,6 @@ $(document).ready(function() {
 				alert("Failed");
 			}).always(function() {
 				cleanForm();
-				$("#buttonDeleteEmployee").prop("disabled", false);
 			});
 		}
 	});

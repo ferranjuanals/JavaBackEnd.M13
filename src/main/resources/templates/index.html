@@ -3,12 +3,14 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Employees</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-<H1> EMPLOYEES </H1>
-<div>
-	<div>
+<div class="container">
+	<h1> List of Employees </h1>
+	<div class="form-inline">
 		<label for="selectRole">Filter by Role:</label>
 		<select name="selectRole" id="selectRole">
 			<option value="all" selected >All</option>
@@ -17,21 +19,26 @@
 			<option value="MANAGER">MANAGER</option>
 			<option value="BOSS">BOSS</option>
 		</select>
-		<input type="button" name="buttonRefreshEmployees" value="Refresh Employees" id="buttonRefreshEmployees"/>
+		<input type="button" name="buttonRefreshEmployees" value="Refresh Employee List" id="buttonRefreshEmployees" class="btn btn-primary"/>
 	</div>
-	<div>
-		<table id="employeeData" border=1>
+	<div class="table-scroll">
+		<table id="employeeData" class="table">
 			<thead>
-				<tr><th> ID <th> Name <th> Role <th> Salary <th></tr>
+				<tr>
+					<th> ID </th> 
+					<th> Name </th> 
+					<th> Role </th> 
+					<th> Salary </th> 
+					<th></th>
+				</tr>
 			</thead>
 			<tbody>
 			</tbody>
 		</table>
 	</div>
-	<div id="idForm"></div>
-	<div id="nameForm">
+	<div class="form-inline">
 		<label for="fieldEmployeeId">Id:</label>
-		<input type="text" id="fieldEmployeeId" value="" size=1 readonly/>
+		<input type="text" id="fieldEmployeeId" size=1 disabled/>
 		<label for="fieldEmployeeName">Name:</label>
 		<input type="text" id="fieldEmployeeName" size=15 required/>
 		<label for="fieldEmployeeRole">Role:</label>
@@ -43,12 +50,13 @@
 			<option value="BOSS">BOSS</option>
 		</select>
 		<label for="fieldEmployeeSalary">Salary:</label>
-		<input type="text" id="fieldEmployeeSalary" size=4 value="" readonly/>
-		<input type="button" value="Add" id="buttonAddEmployee"/>
-		<input type="button" value="Edit" id="buttonEditEmployee" disabled/>
-		<input type="button" value="Delete" id="buttonDeleteEmployee" disabled/>
+		<input type="text" id="fieldEmployeeSalary" size=4 disabled/>
+		<input type="button" value="Add" id="buttonAddEmployee" class="btn btn-secondary"/>
+		<input type="button" value="Edit" id="buttonEditEmployee" class="btn btn-secondary" disabled/>
+		<input type="button" value="Delete" id="buttonDeleteEmployee" class="btn btn-secondary" disabled/>
 	</div>
 </div>
 <script type="text/javascript" src="employees.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 </body>
 </html>
